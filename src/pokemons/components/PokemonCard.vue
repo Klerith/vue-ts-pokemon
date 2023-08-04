@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { useQueryClient } from '@tanstack/vue-query';
+
 import type { Pokemon } from '../interfaces/pokemon';
+import { getPokemonById } from '../helpers/get-pokemon-by-id';
 
 interface Props {
   pokemon: Pokemon;
 }
 const props = defineProps<Props>();
-
 const router = useRouter();
-
+const queryClient = useQueryClient();
 
 const goTo = () => {
   router.push({
@@ -17,12 +19,21 @@ const goTo = () => {
   })
 }
 
+const prefetchPokemon = () => {
+  // console.log( props.pokemon.id );
+  const id =  props.pokemon.id.toString();
+
+  queryClient.prefetchQuery({
+    queryKey: ['pokemon', id ],
+    queryFn: () => getPokemonById(id),
+  });
+}
 
 
 </script>
 
 <template>
-  <div class="pokemon-card" @click="goTo" >
+  <div class="pokemon-card" @click="goTo" @mouseenter="prefetchPokemon">
     <img :src="pokemon.frontSprite" :alt="pokemon.name">
     <h3>{{ pokemon.name }}</h3>
   </div>

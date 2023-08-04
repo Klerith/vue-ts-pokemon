@@ -2,6 +2,7 @@ import { computed, watchEffect } from "vue";
 import { useQuery } from "@tanstack/vue-query";
 
 import { getPokemons } from "../helpers/get-pokemons";
+import { initialPokemons } from "../data/initial-pokemons";
 
 
 export const usePokemons = () => {
@@ -12,6 +13,7 @@ export const usePokemons = () => {
     getPokemons,
     {
       retry: 0,
+      initialData: initialPokemons,
     }
   );
 

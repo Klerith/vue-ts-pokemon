@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { /*toRef*/ computed } from 'vue';
 import type { RouterLink } from '@/router/list-routes';
 
 interface Props {
@@ -7,10 +8,13 @@ interface Props {
   isSecondary?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   title: 'CompoApp',
   isSecondary: false,
 });
+// const links = toRef(props, 'links');
+const links = computed(() =>  props.links.filter(link => link.visible) );
+// const links = props.links;
 
 </script>
 
@@ -23,7 +27,7 @@ withDefaults(defineProps<Props>(), {
     </template>
 
     <RouterLink 
-      v-for="link of $props.links"
+      v-for="link of links"
       :key="link.path"
       :to="link.path">
         {{ link.title }}

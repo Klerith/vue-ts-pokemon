@@ -1,7 +1,7 @@
 import axios from 'axios';
 import pokemonApi from '../api/pokemonApi';
 import type { PokemonListResponse, Pokemon, PokemonResponse } from '../interfaces';
-// import { sleep } from './sleep';
+import { sleep } from './sleep';
 
 
 
@@ -9,7 +9,7 @@ import type { PokemonListResponse, Pokemon, PokemonResponse } from '../interface
 
 export const getPokemons = async(): Promise<Pokemon[]> => {
 
-  // await sleep(4);
+  await sleep(4);
   // throw new Error('Error de prueba');
 
   const { data } = await pokemonApi.get<PokemonListResponse>('/pokemon?limit=45');
